@@ -1,60 +1,7 @@
-.rollbox {
-    height: 200px;
-    background: #000;
-    border: 1px solid #616161;
-    overflow-x: auto;
-    overflow: hidden;
-    position: relative;
-    padding: 0;
-}
-
-#loadout {
-    position: absolute;
-    top: 10px;
-    left: 5px;
-}
-
-.roller {
-    position: relative;
-    text-align: center;
-    color: white;
-    height: 180px;
-    width: 180px;
-    box-shadow: 5px 0 5px 0 black;
-    background-color: gray;
-}
-
-td:nth-child(even) .roller {
-    background-color: darkgray;
-}
-
-.roller-data {
-    height: 100%;
-    width: 100%;
-    line-height: 0px;
-    position: absolute;
-    margin-top: 20px;
-}
-
-.roller-data img {
-    height: 128px;
-}
-
-.roller-data div {
-    margin-top: 10px;
-}
-
-.line {
-    width: 2px;
-    height: 100%;
-    left: 50%;
-    position: absolute;
-    background: yellow;
-    opacity: 0.5;
-    z-index: 10000;
-}
-
 #roll-btn {
     margin-top: 30px;
 }
 
+.owl-item.active.center {
+    border: 3px solid red;
+}

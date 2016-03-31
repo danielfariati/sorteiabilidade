@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Sorteiabilidade</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/vendor/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/vendor/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet" type="text/css">
     <link href="assets/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -18,23 +20,11 @@
     </div>
 
     <div class="row">
-        <div class="rollbox">
-            <div class="line"></div>
-            <table>
-                <tr id="loadout"></tr>
-            </table>
-        </div>
+        <div id="loadout" class="owl-carousel"></div>
     </div>
 
     <div class="row">
         <button id="roll-btn" class="btn btn-success btn-block">Sortear</button>
-    </div>
-
-    <div class="row">
-        <h2 id="result-wrapper" class="text-center">
-            Parabéns ao ganhador:
-            <span class="winner-name"></span>
-        </h2>
     </div>
 
     <audio id="shuffle-audio" preload="auto" loop="true">
@@ -44,7 +34,8 @@
     </audio>
 </div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="assets/vendor/owl.carousel/dist/owl.carousel.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

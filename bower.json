@@ -1,0 +1,25 @@
+{
+  "name": "sorteiabilidade",
+  "homepage": "https://github.com/danielfariati/sorteiabilidade",
+  "authors": [
+    "Daniel Faria Gomes <danielfariati@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/assets/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.2",
+    "bootstrap": "^3.3.6",
+    "owl.carousel": "^2.0.0-beta.3"
+  }
+}

@@ -26,25 +26,29 @@
         numberOfSpins = 30,
         $rollBtn = $('#roll-btn'),
         $loadout = $('#loadout'),
-        $resultWrapper = $('#result-wrapper'),
         $audio = $('#shuffle-audio');
-
-    $resultWrapper.hide();
 
     function bindRoll() {
         $rollBtn.on('click', function () {
-            roll(durationTimeInMilliseconds, numberOfSpins);
+            roll();
         });
     }
 
     function roll() {
-        $resultWrapper.hide();
+        $loadout.trigger('to.owl.carousel', [0, 0, true]);
         $rollBtn.attr('disabled', true);
-        $loadout.empty().css('left', '100%');
         $audio.prop('volume', 1).trigger('play');
+        $loadout.trigger('to.owl.carousel', [randomBetween((numberOfSpins - 1) * users.length, numberOfSpins * users.length), durationTimeInMilliseconds / 5, true]);
+        setTimeout(function() {
+            $audio.animate({volume: 0}, 1000, function() {
+                $(this).trigger('pause').prop('currentTime', 0);
+            });
+            $rollBtn.removeAttr('disabled');
+        }, durationTimeInMilliseconds + 2000);
+    }
 
-        addUsersToLoadout();
-        animateWheel();
+    function randomBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
     function addUsersToLoadout() {
@@ -52,47 +56,28 @@
             var shuffledUsers = users.slice(0).shuffle();
             for (var y = 0; y < shuffledUsers.length; y++) {
                 $loadout.append(
-                    '<td>' +
-                    '<div class="roller">' +
-                    '<div class="roller-data">' +
+                    '<div>' +
                     '<img src="' + shuffledUsers[y].avatarUrl + '">' +
-                    '<div>' + shuffledUsers[y].name + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</td>'
+                    '<div class="text-center">' + shuffledUsers[y].name + '</div>' +
+                    '</div>'
                 );
             }
         }
     }
 
-    function animateWheel() {
-        var diff = users.length * numberOfSpins * 96;
-        diff = randomBetween(diff - 300, diff + 300);
-
-        $loadout.animate({ left: '-=' + diff }, durationTimeInMilliseconds, function () {
-            $rollBtn.attr('disabled', false);
-            $audio.animate({volume: 0}, 1000, function() {
-                $(this).trigger('pause').prop('currentTime', 0);
-            });
-            showWinner();
-        });
-    }
-
-    function showWinner() {
-        $loadout.children('td').each(function () {
-            var center = window.innerWidth / 2,
-                $this = $(this);
-
-            if ($this.offset().left < center && $this.offset().left + 185 > center) {
-                var winnerName = $this.children().text();
-                $resultWrapper.show().find('.winner-name').text(winnerName);
-            }
-        });
-    }
-
-    function randomBetween(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
     bindRoll();
+    addUsersToLoadout();
+    $loadout.owlCarousel({
+        center: true,
+        items:2,
+        loop:false,
+        margin:10,
+        dots: false,
+        nav: false,
+        responsive:{
+            600:{
+                items:4
+            }
+        }
+    });
 })();
