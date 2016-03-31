@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sorteiabilidade</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="text-center">
+            <div class="page-header">
+                <h1>Sorteiabilidade</h1>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="rollbox">
+            <div class="line"></div>
+            <table>
+                <tr id="loadout"></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <button id="roll" class="btn btn-success btn-block">Sortear</button>
+    </div>
+
+    <div class="row">
+        <h2 id="result-wrapper" class="text-center">
+            Parabéns ao ganhador:
+            <span id="result"></span>
+        </h2>
+    </div>
+
+    <audio id="shuffle-audio" preload="auto" loop="true">
+        <source src="assets/media/piao-da-casa-propria.mp3" />
+        <source src="assets/media/piao-da-casa-propria.m4a" />
+        <source src="assets/media/piao-da-casa-propria.ogg" />
+    </audio>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
