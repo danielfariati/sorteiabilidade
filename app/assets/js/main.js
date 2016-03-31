@@ -35,6 +35,8 @@
     }
 
     function roll() {
+        initCarousel();
+
         $loadout.trigger('to.owl.carousel', [0, 0, true]);
         $rollBtn.attr('disabled', true);
         $audio.prop('volume', 1).trigger('play');
@@ -54,6 +56,8 @@
     function addUsersToLoadout() {
         var shuffledUsers = users.slice(0).shuffle();
 
+        $loadout.empty();
+
         for (var i = 0; i < numberOfSpins; i++) {
             for (var y = 0; y < shuffledUsers.length; y++) {
                 $loadout.append(
@@ -67,6 +71,8 @@
     }
 
     function initCarousel() {
+        $loadout.trigger('destroy.owl.carousel');
+        addUsersToLoadout();
         $loadout.owlCarousel({
             items: 4,
             margin: 50,
@@ -76,6 +82,5 @@
     }
 
     bindRoll();
-    addUsersToLoadout();
     initCarousel();
 })();
