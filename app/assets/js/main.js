@@ -77,5 +77,5 @@
 
     bindRoll();
     addUsersToLoadout();
-    initCarousel;
+    initCarousel();
 })();
