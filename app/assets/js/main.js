@@ -23,7 +23,7 @@
             {name: 'Passarinho 10', avatarUrl: 'https://api.adorable.io/avatars/128/10.png'}
         ],
         durationTimeInMilliseconds = 10000,
-        numberOfSpins = 30,
+        numberOfSpins = Math.max(2, 300 / users.length),
         $rollBtn = $('#roll-btn'),
         $loadout = $('#loadout'),
         $audio = $('#shuffle-audio');
@@ -38,9 +38,9 @@
         $loadout.trigger('to.owl.carousel', [0, 0, true]);
         $rollBtn.attr('disabled', true);
         $audio.prop('volume', 1).trigger('play');
-        $loadout.trigger('to.owl.carousel', [randomBetween((numberOfSpins - 1) * users.length, numberOfSpins * users.length), durationTimeInMilliseconds / 5, true]);
-        setTimeout(function() {
-            $audio.animate({volume: 0}, 1000, function() {
+        $loadout.trigger('to.owl.carousel', [randomBetween(((numberOfSpins - 1) * users.length) - 1, (numberOfSpins * users.length) - 1), durationTimeInMilliseconds / 5, true]);
+        setTimeout(function () {
+            $audio.animate({volume: 0}, 1000, function () {
                 $(this).trigger('pause').prop('currentTime', 0);
             });
             $rollBtn.removeAttr('disabled');
@@ -52,8 +52,9 @@
     }
 
     function addUsersToLoadout() {
+        var shuffledUsers = users.slice(0).shuffle();
+
         for (var i = 0; i < numberOfSpins; i++) {
-            var shuffledUsers = users.slice(0).shuffle();
             for (var y = 0; y < shuffledUsers.length; y++) {
                 $loadout.append(
                     '<div>' +
@@ -65,19 +66,16 @@
         }
     }
 
+    function initCarousel() {
+        $loadout.owlCarousel({
+            items: 4,
+            margin: 50,
+            center: true,
+            dots: false
+        });
+    }
+
     bindRoll();
     addUsersToLoadout();
-    $loadout.owlCarousel({
-        center: true,
-        items:2,
-        loop:false,
-        margin:10,
-        dots: false,
-        nav: false,
-        responsive:{
-            600:{
-                items:4
-            }
-        }
-    });
+    initCarousel;
 })();
