@@ -1,5 +1,5 @@
-(function() {
-    Array.prototype.shuffle = function(){
+(function () {
+    Array.prototype.shuffle = function () {
         var counter = this.length, temp, index;
         while (counter > 0) {
             index = (Math.random() * counter--) | 0;
@@ -11,30 +11,29 @@
     };
 
     var users = [
-            { name: 'Passarinho 1', avatarUrl: 'https://api.adorable.io/avatars/128/1.png' },
-            { name: 'Passarinho 2', avatarUrl: 'https://api.adorable.io/avatars/128/2.png' },
-            { name: 'Passarinho 3', avatarUrl: 'https://api.adorable.io/avatars/128/3.png' },
-            { name: 'Passarinho 4', avatarUrl: 'https://api.adorable.io/avatars/128/4.png' },
-            { name: 'Passarinho 5', avatarUrl: 'https://api.adorable.io/avatars/128/5.png' },
-            { name: 'Passarinho 6', avatarUrl: 'https://api.adorable.io/avatars/128/6.png' },
-            { name: 'Passarinho 7', avatarUrl: 'https://api.adorable.io/avatars/128/7.png' },
-            { name: 'Passarinho 8', avatarUrl: 'https://api.adorable.io/avatars/128/8.png' },
-            { name: 'Passarinho 9', avatarUrl: 'https://api.adorable.io/avatars/128/9.png' },
-            { name: 'Passarinho 10', avatarUrl: 'https://api.adorable.io/avatars/128/10.png' }
+            {name: 'Passarinho 1', avatarUrl: 'https://api.adorable.io/avatars/128/1.png'},
+            {name: 'Passarinho 2', avatarUrl: 'https://api.adorable.io/avatars/128/2.png'},
+            {name: 'Passarinho 3', avatarUrl: 'https://api.adorable.io/avatars/128/3.png'},
+            {name: 'Passarinho 4', avatarUrl: 'https://api.adorable.io/avatars/128/4.png'},
+            {name: 'Passarinho 5', avatarUrl: 'https://api.adorable.io/avatars/128/5.png'},
+            {name: 'Passarinho 6', avatarUrl: 'https://api.adorable.io/avatars/128/6.png'},
+            {name: 'Passarinho 7', avatarUrl: 'https://api.adorable.io/avatars/128/7.png'},
+            {name: 'Passarinho 8', avatarUrl: 'https://api.adorable.io/avatars/128/8.png'},
+            {name: 'Passarinho 9', avatarUrl: 'https://api.adorable.io/avatars/128/9.png'},
+            {name: 'Passarinho 10', avatarUrl: 'https://api.adorable.io/avatars/128/10.png'}
         ],
         durationTimeInMilliseconds = 10000,
-        numberOfSpins =  30,
-        $rollBtn = $('#roll'),
+        numberOfSpins = 30,
+        $rollBtn = $('#roll-btn'),
         $loadout = $('#loadout'),
         $resultWrapper = $('#result-wrapper'),
-        $result = $('#result'),
         $audio = $('#shuffle-audio');
 
     $resultWrapper.hide();
 
     function bindRoll() {
-        $rollBtn.on('click', function() {
-            roll();
+        $rollBtn.on('click', function () {
+            roll(durationTimeInMilliseconds, numberOfSpins);
         });
     }
 
@@ -42,17 +41,16 @@
         $resultWrapper.hide();
         $rollBtn.attr('disabled', true);
         $loadout.empty().css('left', '100%');
-        $result.empty();
-        $audio.trigger('play');
+        $audio.prop('volume', 1).trigger('play');
 
         addUsersToLoadout();
         animateWheel();
     }
 
     function addUsersToLoadout() {
-        for(var i = 0; i < numberOfSpins; i++) {
+        for (var i = 0; i < numberOfSpins; i++) {
             var shuffledUsers = users.slice(0).shuffle();
-            for(var y = 0; y < shuffledUsers.length; y++){
+            for (var y = 0; y < shuffledUsers.length; y++) {
                 $loadout.append(
                     '<td>' +
                     '<div class="roller">' +
@@ -69,21 +67,26 @@
 
     function animateWheel() {
         var diff = users.length * numberOfSpins * 96;
-        diff = randomBetween(diff - 300,diff + 300);
+        diff = randomBetween(diff - 300, diff + 300);
 
-        $( "#loadout" ).animate({
-            left: "-=" + diff
-        },  durationTimeInMilliseconds, function() {
-            $("#roll").attr("disabled",false);
-            $('#loadout').children('td').each(function () {
-                var center = window.innerWidth / 2;
-                if($(this).offset().left < center && $(this).offset().left + 185 > center){
-                    var winnerName = $(this).children().text();
-                    $resultWrapper.show();
-                    $result.text(winnerName);
-                    $audio.animate({volume: 0}, 1000);
-                }
+        $loadout.animate({ left: '-=' + diff }, durationTimeInMilliseconds, function () {
+            $rollBtn.attr('disabled', false);
+            $audio.animate({volume: 0}, 1000, function() {
+                $(this).trigger('pause').prop('currentTime', 0);
             });
+            showWinner();
+        });
+    }
+
+    function showWinner() {
+        $loadout.children('td').each(function () {
+            var center = window.innerWidth / 2,
+                $this = $(this);
+
+            if ($this.offset().left < center && $this.offset().left + 185 > center) {
+                var winnerName = $this.children().text();
+                $resultWrapper.show().find('.winner-name').text(winnerName);
+            }
         });
     }
 
