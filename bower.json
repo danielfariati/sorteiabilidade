@@ -22,6 +22,7 @@
     "bootstrap": "^3.3.6",
     "owl.carousel": "^2.0.0-beta.3",
     "jquery-csv": "*",
-    "gravatarjs": "^1.0.0"
+    "gravatarjs": "^1.0.0",
+    "particles.js": "particlesjs#^2.0.0"
   }
 }

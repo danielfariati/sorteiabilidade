@@ -1,7 +1,19 @@
+body {
+    background-color: #544663;
+    color: white;
+}
+
+#particles-wrapper {
+    position: absolute;
+    height: 98%;
+    width: 100%;
+    z-index: -1;
+}
+
 #roll-btn {
     margin-top: 30px;
 }
 
 .owl-item.active.center {
-    border: 3px solid red;
+    border: 3px solid #FFCC00;
 }

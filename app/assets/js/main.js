@@ -51,11 +51,11 @@
 
         $loadout.empty();
 
-        for (var i = 0; i < numberOfSpins; i++) {
+        for (var i = 0; i < numberOfSpins + 1; i++) {
             for (var y = 0; y < shuffledUsers.length; y++) {
                 $loadout.append(
                     '<div>' +
-                    '<img src="' + gravatar(shuffledUsers[y].Email, { size: 258, rating: 'pg', backup: 'retro', secure: true }) + '">' +
+                    '<img src="' + gravatar(shuffledUsers[y].Email, { size: 516, rating: 'pg', backup: 'retro', secure: true }) + '">' +
                     '<div class="text-center">' + shuffledUsers[y].Name + '</div>' +
                     '</div>'
                 );
@@ -91,10 +91,14 @@
                 initCarousel();
             };
             reader.readAsText(file);
-            console.log(file);
         })
+    }
+
+    function initParticles() {
+        particlesJS.load('particles-wrapper', 'assets/media/particles.json');
     }
 
     bindRoll();
     bindFileUpload();
+    initParticles();
 })();
