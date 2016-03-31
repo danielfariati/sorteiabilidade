@@ -31,7 +31,7 @@
 
         $loadout.trigger('to.owl.carousel', [0, 0, true]);
         $rollBtn.attr('disabled', true);
-        $audio.prop('volume', 1).trigger('play');
+        $audio.prop('volume', 0.5).animate({volume: 1}, 1000).trigger('play');
         $loadout.trigger('to.owl.carousel', [randomBetween(((getNumberOfSpins() - 1) * users.length) - 1, (getNumberOfSpins() * users.length) - 1), durationTimeInMilliseconds / 5, true]);
         setTimeout(function () {
             $audio.animate({volume: 0}, 1000, function () {
