@@ -10,23 +10,15 @@
         return this;
     };
 
-    var users = [
-            {name: 'Passarinho 1', avatarUrl: 'https://api.adorable.io/avatars/128/1.png'},
-            {name: 'Passarinho 2', avatarUrl: 'https://api.adorable.io/avatars/128/2.png'},
-            {name: 'Passarinho 3', avatarUrl: 'https://api.adorable.io/avatars/128/3.png'},
-            {name: 'Passarinho 4', avatarUrl: 'https://api.adorable.io/avatars/128/4.png'},
-            {name: 'Passarinho 5', avatarUrl: 'https://api.adorable.io/avatars/128/5.png'},
-            {name: 'Passarinho 6', avatarUrl: 'https://api.adorable.io/avatars/128/6.png'},
-            {name: 'Passarinho 7', avatarUrl: 'https://api.adorable.io/avatars/128/7.png'},
-            {name: 'Passarinho 8', avatarUrl: 'https://api.adorable.io/avatars/128/8.png'},
-            {name: 'Passarinho 9', avatarUrl: 'https://api.adorable.io/avatars/128/9.png'},
-            {name: 'Passarinho 10', avatarUrl: 'https://api.adorable.io/avatars/128/10.png'}
-        ],
+    var users = [],
         durationTimeInMilliseconds = 10000,
-        numberOfSpins = Math.max(2, 300 / users.length),
         $rollBtn = $('#roll-btn'),
         $loadout = $('#loadout'),
         $audio = $('#shuffle-audio');
+
+    function getNumberOfSpins() {
+        return Math.max(2, 300 / Math.max(1, users.length));
+    }
 
     function bindRoll() {
         $rollBtn.on('click', function () {
@@ -40,7 +32,7 @@
         $loadout.trigger('to.owl.carousel', [0, 0, true]);
         $rollBtn.attr('disabled', true);
         $audio.prop('volume', 1).trigger('play');
-        $loadout.trigger('to.owl.carousel', [randomBetween(((numberOfSpins - 1) * users.length) - 1, (numberOfSpins * users.length) - 1), durationTimeInMilliseconds / 5, true]);
+        $loadout.trigger('to.owl.carousel', [randomBetween(((getNumberOfSpins() - 1) * users.length) - 1, (getNumberOfSpins() * users.length) - 1), durationTimeInMilliseconds / 5, true]);
         setTimeout(function () {
             $audio.animate({volume: 0}, 1000, function () {
                 $(this).trigger('pause').prop('currentTime', 0);
@@ -54,7 +46,8 @@
     }
 
     function addUsersToLoadout() {
-        var shuffledUsers = users.slice(0).shuffle();
+        var shuffledUsers = users.slice(0).shuffle(),
+            numberOfSpins = getNumberOfSpins();
 
         $loadout.empty();
 
@@ -62,8 +55,8 @@
             for (var y = 0; y < shuffledUsers.length; y++) {
                 $loadout.append(
                     '<div>' +
-                    '<img src="' + shuffledUsers[y].avatarUrl + '">' +
-                    '<div class="text-center">' + shuffledUsers[y].name + '</div>' +
+                    '<img src="' + gravatar(shuffledUsers[y].Email, { size: 258, rating: 'pg', backup: 'retro', secure: true }) + '">' +
+                    '<div class="text-center">' + shuffledUsers[y].Name + '</div>' +
                     '</div>'
                 );
             }
@@ -81,6 +74,27 @@
         });
     }
 
+    function bindFileUpload(file) {
+        var $beforeFileLoadWrapper = $('#before-file-load'),
+            $afterFileLoadWrapper = $('#after-file-load');
+
+        $afterFileLoadWrapper.hide();
+
+        $('#file').on('change', function() {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var csv = event.target.result;
+                users = $.csv.toObjects(csv);
+                $beforeFileLoadWrapper.hide();
+                $afterFileLoadWrapper.show();
+                initCarousel();
+            };
+            reader.readAsText(file);
+            console.log(file);
+        })
+    }
+
     bindRoll();
-    initCarousel();
+    bindFileUpload();
 })();

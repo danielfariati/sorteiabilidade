@@ -15,16 +15,23 @@
             <div class="page-header">
                 <h1>Sorteiabilidade</h1>
             </div>
-
         </div>
     </div>
 
-    <div class="row">
-        <div id="loadout" class="owl-carousel"></div>
+    <div id="before-file-load">
+        <h2>Selecione o arquivo .csv com os participantes.</h2>
+        <h5><a href="assets/media/example.csv">(Download: Arquivo de exemplo)</a></h5>
+        <input type="file" name="file" id="file" accept=".csv">
     </div>
 
-    <div class="row">
-        <button id="roll-btn" class="btn btn-success btn-block">Sortear</button>
+    <div id="after-file-load">
+        <div class="row">
+            <div id="loadout" class="owl-carousel"></div>
+        </div>
+
+        <div class="row">
+            <button id="roll-btn" class="btn btn-success btn-block">Sortear</button>
+        </div>
     </div>
 
     <audio id="shuffle-audio" preload="auto" loop="true">
@@ -36,6 +43,8 @@
 
 <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="assets/vendor/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="assets/vendor/jquery-csv/src/jquery.csv.min.js"></script>
+<script src="assets/vendor/gravatarjs/gravatar.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
