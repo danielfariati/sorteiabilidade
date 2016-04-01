@@ -21,10 +21,15 @@
         </div>
     </div>
 
-    <div id="before-file-load" class="col-sm-offset-4 col-sm-5">
+    <div id="before-file-load" class="text-center">
         <h2>Selecione o arquivo .csv com os participantes.</h2>
-        <h5><a class="btn btn-sm btn-primary" href="assets/media/example.csv">Baixar arquivo de exemplo</a></h5>
-        <input type="file" name="file" id="file" accept=".csv">
+        <div>
+            <span class="btn btn-primary btn-file">
+                <input type="file" name="file" id="file" accept=".csv">
+                Selecionar arquivo
+            </span>
+            <a class="btn btn-xs btn-default" href="assets/media/example.csv">Baixar arquivo de exemplo</a>
+        </div>
     </div>
 
     <div id="after-file-load">
@@ -33,7 +38,9 @@
         </div>
 
         <div class="row">
-            <button id="roll-btn" class="btn btn-success btn-block">Sortear</button>
+            <div class="col-sm-offset-4 col-sm-4 text-center">
+                <button id="roll-btn" class="btn btn-success btn-block">Sortear</button>
+            </div>
         </div>
     </div>
 
@@ -46,7 +53,7 @@
 
 <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="assets/vendor/owl.carousel/dist/owl.carousel.min.js"></script>
-<script src="assets/vendor/jquery-csv/src/jquery.csv.min.js"></script>
+<script src="assets/vendor/jquery-csv/src/jquery.csv.js"></script>
 <script src="assets/vendor/gravatarjs/gravatar.js"></script>
 <script src="assets/vendor/particles.js/particles.min.js"></script>
 <script src="assets/js/main.js"></script>

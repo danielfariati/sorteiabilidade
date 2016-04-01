@@ -28,8 +28,6 @@
 
     function roll() {
         initCarousel();
-
-        $loadout.trigger('to.owl.carousel', [0, 0, true]);
         $rollBtn.attr('disabled', true);
         $audio.prop('volume', 0.5).animate({volume: 1}, 1000).trigger('play');
         $loadout.trigger('to.owl.carousel', [randomBetween(((getNumberOfSpins() - 1) * users.length) - 1, (getNumberOfSpins() * users.length) - 1), durationTimeInMilliseconds / 5, true]);
@@ -51,16 +49,24 @@
 
         $loadout.empty();
 
-        for (var i = 0; i < numberOfSpins + 1; i++) {
+        for (var i = 0; i < numberOfSpins; i++) {
             for (var y = 0; y < shuffledUsers.length; y++) {
-                $loadout.append(
-                    '<div>' +
-                    '<img src="' + gravatar(shuffledUsers[y].Email, { size: 516, rating: 'pg', backup: 'retro', secure: true }) + '">' +
-                    '<div class="text-center">' + shuffledUsers[y].Name + '</div>' +
-                    '</div>'
-                );
+                appendUser(shuffledUsers[y]);
             }
         }
+
+        // adding users to give the effect of infinite roulette (they will never be selected as winners)
+        appendUser(shuffledUsers[0]);
+        appendUser(shuffledUsers[1]);
+    }
+
+    function appendUser(user) {
+        $loadout.append(
+            '<div>' +
+            '<img src="' + gravatar(user.Email, { size: 516, rating: 'pg', backup: 'retro', secure: true }) + '">' +
+            '<div class="text-center">' + user.Name + '</div>' +
+            '</div>'
+        );
     }
 
     function initCarousel() {
@@ -71,7 +77,7 @@
             margin: 50,
             center: true,
             dots: false
-        });
+        }).trigger('to.owl.carousel', [2, 0, true]);;
     }
 
     function bindFileUpload(file) {
